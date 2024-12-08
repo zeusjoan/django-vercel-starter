@@ -1,14 +1,42 @@
-<!-- templates/main/home.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <h1>Welcome to Django Vercel Starter</h1>
-    <p>Your project is successfully set up!</p>
-</body>
-</html>
+{% extends 'base/base.html' %}
 
+{% block title %}Home - {{ block.super }}{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <!-- Karta powitalna -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h1 class="card-title">Welcome to Django Vercel Starter</h1>
+                <p class="card-text">Your project is successfully set up!</p>
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Przykładowe elementy Bootstrap -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                Bootstrap Components
+            </div>
+            <div class="card-body">
+                <!-- Alert -->
+                <div class="alert alert-success mb-3" role="alert">
+                    This is a success alert!
+                </div>
+
+                <!-- Progress bar -->
+                <div class="progress mb-3">
+                    <div class="progress-bar" role="progressbar" style="width: 75%">75%</div>
+                </div>
+
+                <!-- Badge -->
+                <h5>Example heading <span class="badge bg-secondary">New</span></h5>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
