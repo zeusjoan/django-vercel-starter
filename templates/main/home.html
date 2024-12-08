@@ -1,42 +1,76 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Home - {{ block.super }}{% endblock title %}
+{% block title %}Dashboard - {{ block.super }}{% endblock %}
 
 {% block content %}
 <div class="row">
-    <!-- Karta powitalna -->
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h1 class="card-title">Welcome to Django Vercel Starter</h1>
-                <p class="card-text">Your project is successfully set up!</p>
-                <button class="btn btn-primary">Primary Button</button>
-                <button class="btn btn-secondary">Secondary Button</button>
+    {% if user.is_authenticated %}
+        <!-- Panel powitalny -->
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Welcome back, {{ user.username }}!</h2>
+                    <p class="text-muted">Here's your dashboard</p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Przykładowe elementy Bootstrap -->
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-header">
-                Bootstrap Components
-            </div>
-            <div class="card-body">
-                <!-- Alert -->
-                <div class="alert alert-success mb-3" role="alert">
-                    This is a success alert!
+        <!-- Szybkie akcje -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quick Actions</h5>
                 </div>
-
-                <!-- Progress bar -->
-                <div class="progress mb-3">
-                    <div class="progress-bar" role="progressbar" style="width: 75%">75%</div>
+                <div class="card-body">
+                    <a href="{% url 'main:profile' %}" class="btn btn-primary w-100 mb-2">View Profile</a>
+                    <a href="{% url 'admin:index' %}" class="btn btn-secondary w-100 mb-2">Admin Panel</a>
+                    <form action="{% url 'main:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger w-100">Logout</button>
+                    </form>
                 </div>
-
-                <!-- Badge -->
-                <h5>Example heading <span class="badge bg-secondary">New</span></h5>
             </div>
         </div>
-    </div>
+
+        <!-- Informacje o koncie -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Account Info</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Email:</strong> {{ user.email|default:"Not set" }}</p>
+                    <p><strong>Last login:</strong> {{ user.last_login|date:"F j, Y, g:i a." }}</p>
+                    <p><strong>Account created:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informacje systemowe -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">System Info</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Django Version:</strong> {{ django_version }}</p>
+                    <p><strong>Python Version:</strong> {{ python_version }}</p>
+                    <p><strong>Debug Mode:</strong> {{ debug|yesno:"On,Off" }}</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1>Welcome to Django Vercel Starter</h1>
+                    <p class="lead">Please login to access your dashboard</p>
+                    <div class="mt-4">
+                        <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>
-{% endblock content %}
+{% endblock %}

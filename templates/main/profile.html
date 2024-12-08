@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Profile - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2>User Profile</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Account Details</h4>
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>Email:</strong> {{ user.email|default:"Not set" }}</p>
+                        <p><strong>Date joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Actions</h4>
+                        <a href="{% url 'password_change' %}" class="btn btn-primary mb-2 w-100">Change Password</a>
+                        {% if user.is_staff %}
+                            <a href="{% url 'admin:index' %}" class="btn btn-secondary mb-2 w-100">Admin Panel</a>
+                        {% endif %}
+                        <form method="post" action="{% url 'main:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger w-100">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
