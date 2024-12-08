@@ -1,0 +1,35 @@
+{
+    "python.defaultInterpreterPath": "./venv/bin/python",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+        "--django-settings-module=core.settings"
+    ],
+    
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnSave": true,
+        "editor.rulers": [79, 120]
+    },
+    
+    "files.associations": {
+        "**/*.html": "html",
+        "**/templates/**/*.html": "django-html",
+        "**/templates/**/*": "django-txt"
+    },
+    
+    "files.exclude": {
+        "**/*.pyc": true,
+        "**/__pycache__": true,
+        ".pytest_cache": true
+    },
+
+    "terminal.integrated.env.osx": {
+        "DJANGO_SETTINGS_MODULE": "core.settings"
+    }
+}
